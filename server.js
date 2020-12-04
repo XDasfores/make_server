@@ -1,17 +1,20 @@
 const http = require('http');
 const fs = require('fs');
 const { text } = require('body-parser');
-const server = http.createServer((request,response) => {
-    console.log(request.url);
-    console.log(request.method);
-    fs.readFile("./index.html", null, (err,data) =>{
-        response.writeHead(200, {
-            "Content-Type": "text/html"
-        });
-        response.write(data);
-        response.end();
-    })
+const express = require("express");
+const { response } = require("express");
+const server = express();
+
+server.use(express.static(__dirname + '/public'));
+
+server.get('/', (req,res) => {
+    res.sendFile(__dirname + "/index.html");
+
+})
+server.listen(3000,() => {
+    console.log("The server is runing on port 3000 prodect by MT")
 
 });
 
-server.listen(3000);
+
+
